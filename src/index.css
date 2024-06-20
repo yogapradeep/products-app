@@ -5,9 +5,35 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+    color: #263238;
+    background-color: #F9FAFF;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.border-primary-btn{
+  border-color: #FFC422;
+}
+.discount-badge{
+  top: -12px;
+  left: calc(100% - 65px);
+  transform: translateX(-50%);
+}
+.fs_12{
+  font-size: 12px;
+}
+.buy-button{
+  width: 130px;
+}
+.rating-badge{
+  top: 8px;
+  left: 8px;
+  background: linear-gradient(100.27deg, #263238 22.66%, #2F4B59 67.67%);
+}
+.stock-badge{
+  top: 8px;
+  right: 8px;
 }
