@@ -1,19 +1,22 @@
-import React from "react";
-import logo from "./logo.svg";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { ProductProvider } from "./context/ProductContext";
-import { Container } from "react-bootstrap";
 import ProductGrid from "./components/ProductGrid";
+import { ProductProvider } from "./context/ProductContext";
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   return (
-    <ProductProvider>
-      <Container>
-        <h1>Product Management</h1>
-        <ProductGrid />
-      </Container>
-    </ProductProvider>
+    <BrowserRouter>
+      <ProductProvider>
+        <div className="container my-5">
+          <h1 className="my-5 text-center">Products</h1>
+          <Routes>
+            <Route path="/" element={<ProductGrid />} />
+          </Routes>
+        </div>
+      </ProductProvider>
+      <Analytics />
+    </BrowserRouter>
   );
 }
 

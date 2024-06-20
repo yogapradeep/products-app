@@ -9,7 +9,9 @@ import { IProduct } from "../interfaces/IProduct";
 
 interface ProductContextProps {
   products: IProduct[];
-  fetchProducts: (limit: number, skip: number) => void;
+  fetchProducts: (page: number) => void;
+  currentPage: number;
+  totalPages: number;
 }
 
 const ProductContext = createContext<ProductContextProps | undefined>(
@@ -18,21 +20,29 @@ const ProductContext = createContext<ProductContextProps | undefined>(
 
 const ProductProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [products, setProducts] = useState<IProduct[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const productsPerPage = 12;
 
-  const fetchProducts = async (limit: number, skip: number) => {
+  const fetchProducts = async (page: number) => {
+    const skip = (page - 1) * productsPerPage;
     const response = await fetch(
-      `https://dummyjson.com/products?limit=${limit}&skip=${skip}`
+      `https://dummyjson.com/products?limit=${productsPerPage}&skip=${skip}`
     );
     const data = await response.json();
     setProducts(data.products);
+    setTotalPages(Math.ceil(data.total / productsPerPage));
+    setCurrentPage(page);
   };
 
   useEffect(() => {
-    fetchProducts(10, 0); // Initial fetch
+    fetchProducts(1);
   }, []);
 
   return (
-    <ProductContext.Provider value={{ products, fetchProducts }}>
+    <ProductContext.Provider
+      value={{ products, fetchProducts, currentPage, totalPages }}
+    >
       {children}
     </ProductContext.Provider>
   );
